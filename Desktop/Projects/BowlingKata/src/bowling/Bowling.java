@@ -9,15 +9,19 @@ public class Bowling {
     public static final int LAST_ROUND = 9;
     public static final int MAX_NUMBER_OF_PINS = 10;
 
-    public void execute() {
+    public String execute() {
         List<List<Integer>> allScores = new ArrayList<>();
         for (int i = 0; i < 10; i++) {
             allScores.add(playRound(i));
         }
-        sumTotalScore(allScores);
+        return sumTotalScore(allScores);
     }
 
-    private static void sumTotalScore(List<List<Integer>> allFrames) {
+    public String execute(List<List<Integer>> allScores) {
+        return sumTotalScore(allScores);
+    }
+
+    private String sumTotalScore(List<List<Integer>> allFrames) {
         Integer totalScore = 0;
 
         for (int frame = 0; frame < allFrames.size(); frame++) {
@@ -41,7 +45,7 @@ public class Bowling {
                 totalScore += play.get(1);
             }
         }
-        System.out.println(allFrames + " = " + totalScore);
+        return allFrames + " = " + totalScore;
     }
 
     public List<Integer> playRound(Integer roundNumber) {
