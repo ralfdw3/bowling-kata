@@ -17,47 +17,12 @@ public class Bowling {
         return sumTotalScore(allScores);
     }
 
-    public String execute(List<List<Integer>> allScores) {
-        return sumTotalScore(allScores);
-    }
-
-    private String sumTotalScore(List<List<Integer>> allFrames) {
-        Integer totalScore = 0;
-
-        for (int frame = 0; frame < allFrames.size(); frame++) {
-            List<Integer> play = allFrames.get(frame);
-
-            Integer firstPlayOfFrame = play.get(0);
-
-            if (isLastRound(frame) && play.size() == 3) {
-                totalScore += firstPlayOfFrame;
-                totalScore += play.get(1);
-                totalScore += play.get(2);
-
-            } else if (isStrike(firstPlayOfFrame)) {
-                totalScore += 30;
-
-            } else if (isSpare(firstPlayOfFrame + play.get(1))) {
-                totalScore += 20;
-
-            } else {
-                totalScore += firstPlayOfFrame;
-                totalScore += play.get(1);
-            }
-        }
-        return allFrames + " = " + totalScore;
-    }
-
     public List<Integer> playRound(Integer roundNumber) {
         List<Integer> score = new ArrayList<>();
-        Integer pins = MAX_NUMBER_OF_PINS;
+        int pins = MAX_NUMBER_OF_PINS;
         Integer firstPlay = roll(pins);
 
-        if (isLastRound(roundNumber)) {
-            return playLastRound();
-        }
-
-        if (allPinsAreDown(firstPlay)) {
+        if (allPinsAreDown(firstPlay) && !isLastRound(roundNumber)) {
             score.add(firstPlay);
             return score;
         }
@@ -67,29 +32,55 @@ public class Bowling {
         Integer secondPlay = roll(pins);
         score.add(secondPlay);
 
-        return score;
-    }
-
-    private List<Integer> playLastRound() {
-        List<Integer> score = new ArrayList<>();
-        Integer pins = MAX_NUMBER_OF_PINS;
-        Integer firstPlay = roll(pins);
-
-        if (!allPinsAreDown(firstPlay)) {
-            pins -= firstPlay;
-        }
-        score.add(firstPlay);
-
-        Integer secondPlay = roll(pins);
-        score.add(secondPlay);
-        pins -= secondPlay;
-
-        if (isStrike(firstPlay) || isSpare(pins)) {
+        if ((isStrike(firstPlay) || isSpare(pins)) && isLastRound(roundNumber)) {
             Integer thirdPlay = roll(MAX_NUMBER_OF_PINS);
             score.add(thirdPlay);
         }
 
         return score;
+    }
+
+    public String sumTotalScore(List<List<Integer>> allFrames) {
+        Integer totalScore = 0;
+
+        for (int frame = 0; frame < allFrames.size(); frame++) {
+            List<Integer> play = allFrames.get(frame);
+
+            if (isLastRoundAndHasThreePlays(frame, play)) {
+                totalScore += play.get(0);
+                totalScore += play.get(1);
+                totalScore += play.get(2);
+
+            } else if (isStrike(play.get(0))) {
+                totalScore += 30;
+
+            } else if (isSpare(play.get(0) + play.get(1))) {
+                totalScore += 20;
+
+            } else {
+                totalScore += play.get(0);
+                totalScore += play.get(1);
+            }
+        }
+        System.out.println(allFrames + " = " + totalScore);
+        return allFrames + " = " + totalScore;
+    }
+
+    private int roll(int pinsLeft) {
+        Random random = new Random();
+        return random.nextInt(pinsLeft + 1);
+    }
+
+    private boolean allPinsAreDown(int pinsDown) {
+        return isStrike(pinsDown);
+    }
+
+    private static boolean isLastRound(Integer roundNumber) {
+        return roundNumber == LAST_ROUND;
+    }
+
+    private static boolean isLastRoundAndHasThreePlays(int frame, List<Integer> play) {
+        return isLastRound(frame) && play.size() == 3;
     }
 
     private static boolean isStrike(Integer firstPlay) {
@@ -98,18 +89,5 @@ public class Bowling {
 
     private static boolean isSpare(Integer pinsDropped) {
         return pinsDropped == MAX_NUMBER_OF_PINS;
-    }
-
-    private static boolean isLastRound(Integer roundNumber) {
-        return roundNumber == LAST_ROUND;
-    }
-
-    private boolean allPinsAreDown(int pinsDown) {
-        return isStrike(pinsDown);
-    }
-
-    private int roll(int pinsLeft) {
-        Random random = new Random();
-        return random.nextInt(pinsLeft + 1);
     }
 }

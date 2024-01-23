@@ -12,14 +12,14 @@ class BowlingTest {
 
     @Test
     void whenAllPlaysAreStrikeResultShouldBe300() {
-        String result = bowling.execute(playWithOnlyStrikes());
+        String result = bowling.sumTotalScore(playWithOnlyStrikes());
 
         assertEquals("[[10], [10], [10], [10], [10], [10], [10], [10], [10], [10, 10, 10]] = 300", result);
     }
 
     @Test
     void whenAllPlaysAreSpareseResultShouldBe150() {
-        String result = bowling.execute(playWithOnlySpares());
+        String result = bowling.sumTotalScore(playWithOnlySpares());
 
         assertEquals("[[5, 5], [5, 5], [5, 5], [5, 5], [5, 5], [5, 5], [5, 5], [5, 5], [5, 5], [5, 5, 5]] = 195", result);
     }
