@@ -3,7 +3,7 @@
 Este é um programa simples para calcular a pontuação em um jogo de boliche de dez pinos. O programa oferece uma classe ou módulo que expõe duas funções:
 
 - void roll(int pins): Registra a quantidade de pinos derrubados em um arremesso.
-- int score(): Calcula e retorna a pontuação total do jogo.
+- String score(List<Frame> frames): Calcula e retorna a pontuação total do jogo.
 
 ## Regras do Boliche de Dez Pinos
 
