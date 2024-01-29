@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Stubs {
+    public static final int LAST_ROUND = 9;
 
     public static List<Frame> playWithOnlyStrikes() {
         List<Frame> frames = new ArrayList<>();
@@ -13,7 +14,7 @@ public class Stubs {
         for (int i = 0; i < 9; i++) {
             frames.add(new Frame(10, 0, 0, i));
         }
-        frames.add(new Frame(10, 10, 10, 9));
+        frames.add(new Frame(10, 10, 10, LAST_ROUND));
         return frames;
     }
 
@@ -23,7 +24,7 @@ public class Stubs {
         for (int i = 0; i < 9; i++) {
             frames.add(new Frame(5, 5, 0, i));
         }
-        frames.add(new Frame(5, 5, 5, 9));
+        frames.add(new Frame(5, 5, 5, LAST_ROUND));
         return frames;
     }
 

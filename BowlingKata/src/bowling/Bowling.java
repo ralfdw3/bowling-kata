@@ -31,11 +31,12 @@ public class Bowling {
             return frame;
         }
 
-        pins -= firstPlay;
+        pins = subtractPinsDown(pins, firstPlay);
 
-        frame.setSecondPlay(roll(pins));
+        Integer secondPlay = roll(pins);
+        frame.setSecondPlay(secondPlay);
 
-        if (canMakeOneMorePlayInTheLastRound(firstPlay, pins, roundNumber)) {
+        if (canMakeOneMorePlayInTheLastRound(firstPlay, secondPlay, roundNumber)) {
             frame.setThirdPlay(roll(MAX_NUMBER_OF_PINS));
         }
 
@@ -74,7 +75,12 @@ public class Bowling {
         return random.nextInt(pinsLeft + 1);
     }
 
-    private static boolean canMakeOneMorePlayInTheLastRound(Integer firstPlay, int pins, Integer roundNumber) {
-        return (isStrike(firstPlay) || isSpare(pins)) && isLastRound(roundNumber);
+    private static int subtractPinsDown(int pins, Integer firstPlay) {
+        pins -= firstPlay;
+        return pins;
+    }
+
+    public static boolean canMakeOneMorePlayInTheLastRound(Integer firstPlay, Integer secondPlay, Integer roundNumber) {
+        return (isStrike(firstPlay) || isSpare(firstPlay + secondPlay)) && isLastRound(roundNumber);
     }
 }
