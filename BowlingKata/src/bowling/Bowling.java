@@ -62,11 +62,8 @@ public class Bowling {
                 continue;
             }
 
-            totalScore += firstPlay;
-            totalScore += secondPlay;
-            totalScore += thirdPlay;
+            totalScore = sumScores(totalScore, firstPlay, secondPlay, thirdPlay);
         }
-        System.out.println(frames + " = " + totalScore);
         return frames + " = " + totalScore;
     }
 
@@ -78,6 +75,13 @@ public class Bowling {
     private static int subtractPinsDown(int pins, Integer firstPlay) {
         pins -= firstPlay;
         return pins;
+    }
+
+    private static Integer sumScores(Integer totalScore, Integer firstPlay, Integer secondPlay, Integer thirdPlay) {
+        totalScore += firstPlay;
+        totalScore += secondPlay;
+        totalScore += thirdPlay;
+        return totalScore;
     }
 
     public static boolean canMakeOneMorePlayInTheLastRound(Integer firstPlay, Integer secondPlay, Integer roundNumber) {
